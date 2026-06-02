@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Rotaract Lumina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --main-pink: #D91E5B;
+            --light-pink: #FFF0F5;
+            --pure-white: #ffffff;
+            --soft-gray: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, var(--light-pink) 0%, #ffe4ec 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .register-container {
+            background: white;
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(217, 30, 91, 0.1);
+            border: 1px solid #fce4ec;
+        }
+
+        .register-image {
+            flex: 1.2;
+            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            display: none;
+        }
+
+        .register-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(217, 30, 91, 0.15);
+        }
+
+        @media (min-width: 900px) { .register-image { display: block; } }
+
+        .register-form {
+            flex: 1;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-form h2 {
+            color: var(--main-pink);
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .register-form p {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--main-pink);
+            opacity: 0.7;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1.5px solid #eee;
+            border-radius: 15px;
+            outline: none;
+            background: var(--soft-gray);
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--main-pink);
+            background: white;
+            box-shadow: 0 0 10px rgba(217, 30, 91, 0.05);
+        }
+
+        .cv-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        .file-input-wrapper {
+            background: var(--soft-gray);
+            border: 2px dashed #ddd;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 12px;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: var(--main-pink);
+            background: var(--light-pink);
+        }
+
+        .file-note {
+            color: #888;
+            font-size: 0.78rem;
+            margin-bottom: 10px;
+        }
+
+        .create-btn {
+            background: var(--main-pink);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 25px;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .create-btn:hover {
+            background: #b5154a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(217, 30, 91, 0.2);
+        }
+
+        .create-btn:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .login-back {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .login-back a { color: var(--main-pink); text-decoration: none; font-weight: 700; }
+        .login-back a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <div class="register-image"></div>
+
+        <div class="register-form">
+            <h2>Join Us</h2>
+            <p>Become a part of our journey and start making an impact.</p>
+            
+            <form id="signupForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="signup-name" name="name" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signup-email" name="email" placeholder="Email Address" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signup-password" name="password" placeholder="Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="signup-phone" name="phone" placeholder="Phone Number (e.g. 01234567890)" required>
+                </div>
+
+                <label class="cv-label">Personal Photo (For Identity Confirmation):</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="photo-file" name="photo" accept="image/*" required>
+                </div>
+
+                <label class="cv-label">Upload Your CV (PDF or Word):</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="cv-file" name="cv" accept=".pdf,.doc,.docx">
+                </div>
+                <div class="file-note">Selected files are uploaded to Firebase Storage during registration and linked to the account record.</div>
+
+                <button type="submit" class="create-btn">Create Account</button>
+            </form>
+
+            <div class="login-back">
+                Already have an account? <a href="signin.html">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
+
+        async function postToApi(path, payload, useFormData = false) {
+            const response = await fetch(`${API_BASE}${path}`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: useFormData ? undefined : {
+                    'Content-Type': 'application/json'
+                },
+                body: useFormData ? payload : JSON.stringify(payload)
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.error || 'Something went wrong. Please try again.');
+            }
+
+            return data;
+        }
+
+        async function registerUser(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
+            const password = document.getElementById('signup-password').value;
+            const phone = document.getElementById('signup-phone').value.trim();
+            const photoFile = document.getElementById('photo-file').files[0];
+            const cvFile = document.getElementById('cv-file').files[0];
+            const submitButton = event.currentTarget.querySelector('.create-btn');
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters.');
+                return;
+            }
+
+            if (!photoFile) {
+                alert('Personal photo is required.');
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Creating...';
+
+            try {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('phone', phone);
+                formData.append('photo', photoFile);
+                if (cvFile) {
+                    formData.append('cv', cvFile);
+                }
+
+                await postToApi('/api/signup', formData, true);
+
+                window.location.href = `signin.html?registered=1&email=${encodeURIComponent(email)}`;
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Create Account';
+            }
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', registerUser);
+    </script>
+</body>
+</html>

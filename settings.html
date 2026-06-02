@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | Lumina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-pink: #D91E5B;
+            --soft-pink: #FFF0F5;
+            --text-dark: #2d3436;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #fdfdfd; color: var(--text-dark); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+
+        .settings-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid #eee;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--soft-pink);
+            color: var(--primary-pink);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        .back-btn:hover { transform: scale(1.1); background: var(--primary-pink); color: white; }
+
+        .header { text-align: center; margin-bottom: 35px; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: var(--primary-pink); margin-top: 10px; }
+        .header p { color: #666; font-size: 0.9rem; margin-top: 5px; }
+
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: #444; margin-bottom: 8px; margin-left: 5px; }
+        
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 18px; top: 18px; color: var(--primary-pink); font-size: 1.1rem; }
+        .input-wrapper input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border-radius: 18px;
+            border: 1.5px solid #eee;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+        }
+        .input-wrapper input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(217, 30, 91, 0.1); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(217, 30, 91, 0.2); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .divider { height: 1px; background: #eee; margin: 35px 0; position: relative; }
+        .divider span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 0 15px; color: #999; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        .message { margin-top: 15px; padding: 12px; border-radius: 12px; font-size: 0.85rem; text-align: center; display: none; }
+        .message.success { background: #d4edda; color: #155724; display: block; }
+        .message.error { background: #f8d7da; color: #721c24; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="settings-card">
+    <a href="index.html" class="back-btn" title="Back to Home"><i class="fas fa-chevron-left"></i></a>
+
+    <div class="header">
+        <i class="fas fa-user-cog" style="font-size: 2.5rem; color: var(--primary-pink);"></i>
+        <h1>Account Settings</h1>
+        <p>Update your profile information</p>
+    </div>
+
+    <form id="name-form">
+        <div class="form-group">
+            <label>Change Username</label>
+            <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="new-name" placeholder="Enter new username" required>
+            </div>
+        </div>
+        <button type="submit" class="submit-btn" id="name-submit">Update Name</button>
+    </form>
+
+    <div class="divider"><span>Security</span></div>
+
+    <form id="password-form">
+        <div class="form-group">
+            <label>Old Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="old-password" placeholder="Enter current password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Change Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-key"></i>
+                <input type="password" id="new-password" placeholder="Enter new password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-shield-alt"></i>
+                <input type="password" id="confirm-password" placeholder="Repeat new password" required>
+            </div>
+        </div>
+        <button type="submit" class="submit-btn" id="password-submit">Update Password</button>
+    </form>
+
+    <div id="form-message" class="message"></div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    const API_BASE = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
+
+    async function checkAuth() {
+        try {
+            const res = await fetch(`${API_BASE}/api/me`, { credentials: 'include' });
+            if (!res.ok) { window.location.href = 'signin.html'; return; }
+            const data = await res.json();
+            document.getElementById('new-name').value = data.user.name;
+        } catch (e) {
+            window.location.href = 'signin.html';
+        }
+    }
+
+    document.getElementById('name-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newName = document.getElementById('new-name').value;
+        const submitBtn = document.getElementById('name-submit');
+        submitBtn.disabled = true;
+        
+        try {
+            const res = await fetch(`${API_BASE}/api/account/name`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newName }),
+                credentials: 'include'
+            });
+            const data = await res.json();
+            if (res.ok) {
+                // Update session storage so navbar sees the new name immediately
+                localStorage.setItem('luminaUser', JSON.stringify(data.user));
+                
+                await Swal.fire({
+                    title: 'Name Updated!',
+                    text: `Your name has been changed to ${newName} successfully.`,
+                    icon: 'success',
+                    confirmButtonColor: '#D91E5B',
+                    customClass: { popup: 'my-rounded-popup' }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Update Failed',
+                    text: data.error || 'Failed to update name',
+                    icon: 'error',
+                    confirmButtonColor: '#D91E5B'
+                });
+            }
+        } catch (err) {
+            Swal.fire({ title: 'Error', text: 'Connection error', icon: 'error' });
+        } finally {
+            submitBtn.disabled = false;
+        }
+    });
+
+    document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldPass = document.getElementById('old-password').value;
+        const newPass = document.getElementById('new-password').value;
+        const confirmPass = document.getElementById('confirm-password').value;
+        const submitBtn = document.getElementById('password-submit');
+
+        if (newPass !== confirmPass) {
+            Swal.fire({ title: 'Mismatch', text: 'New passwords do not match!', icon: 'warning' });
+            return;
+        }
+
+        submitBtn.disabled = true;
+        try {
+            const res = await fetch(`${API_BASE}/api/account/password`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentPassword: oldPass, newPassword: newPass }),
+                credentials: 'include'
+            });
+            const data = await res.json();
+            if (res.ok) {
+                await Swal.fire({
+                    title: 'Security Updated!',
+                    text: 'Your password has been changed successfully.',
+                    icon: 'success',
+                    confirmButtonColor: '#D91E5B'
+                });
+                document.getElementById('password-form').reset();
+            } else {
+                Swal.fire({
+                    title: 'Update Failed',
+                    text: data.error || 'Failed to update password',
+                    icon: 'error',
+                    confirmButtonColor: '#D91E5B'
+                });
+            }
+        } catch (err) {
+            Swal.fire({ title: 'Error', text: 'Connection error', icon: 'error' });
+        } finally {
+            submitBtn.disabled = false;
+        }
+    });
+
+    checkAuth();
+</script>
+
+</body>
+</html>

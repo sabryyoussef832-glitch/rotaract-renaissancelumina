@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects & Events | Rotaract Lumina</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        /* --- CSS --- */
+        :root {
+            --primary-pink: #D91E5B;
+            --soft-pink: #FFF0F5;
+            --text-dark: #2d3436;
+            --bg-white: #ffffff;
+            --nav-height: 90px;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --soft-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background: #fdfdfd;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+            padding-top: var(--nav-height);
+        }
+
+        nav {
+            background-color: var(--bg-white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8% 0 0.5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 5000;
+            height: var(--nav-height);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--soft-pink);
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img {
+            width: 280px;
+            height: 90px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 2px solid var(--soft-pink);
+            transition: var(--transition);
+        }
+        .logo-area img:hover { transform: scale(1.03); }
+
+        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.active { color: var(--primary-pink); }
+
+        .login-btn, .register-btn {
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 11px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .login-btn { background: var(--primary-pink); color: white !important; border: none; }
+        .register-btn { background: transparent; color: var(--primary-pink) !important; border: 2px solid var(--primary-pink); }
+        .login-btn:hover, .register-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(217, 30, 91, 0.2); }
+
+        .page-hero {
+            min-height: 46vh;
+            padding: 150px 8% 90px;
+            background: linear-gradient(rgba(217, 30, 91, 0.75), rgba(30, 30, 30, 0.72)), url('images/grad-1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-eyebrow {
+            display: inline-block;
+            margin-bottom: 16px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .page-hero h1 { max-width: 900px; font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: 1.1; margin-bottom: 16px; }
+        .page-hero p { max-width: 760px; font-size: 1.05rem; opacity: 0.95; }
+
+        .section-shell { padding: 70px 8% 90px; }
+        .section-shell.events-shell { background: linear-gradient(to bottom, #fff 0%, var(--soft-pink) 100%); }
+        .section-label { text-align: center; margin-bottom: 14px; font-size: 2.2rem; color: var(--primary-pink); font-weight: 800; }
+        .section-label span { color: var(--text-dark); }
+        .section-copy { max-width: 760px; margin: 0 auto 40px; text-align: center; color: #666; }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { background: white; border-radius: 30px; overflow: hidden; box-shadow: var(--soft-shadow); transition: 0.3s; border: 1px solid #e9ecef; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary-pink); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-tag { display: inline-flex; align-self: flex-start; margin-bottom: 14px; padding: 6px 14px; border-radius: 999px; background: var(--soft-pink); color: var(--primary-pink); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; }
+        .card h3 { margin-bottom: 10px; color: var(--primary-pink); font-size: 1.35rem; }
+        .card p { color: #6b6b6b; margin-bottom: 22px; font-size: 0.95rem; }
+        .view-btn { margin-top: auto; background: var(--primary-pink); color: white; border: none; padding: 12px 25px; border-radius: 15px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; }
+        .view-btn:hover { opacity: 0.9; }
+
+        .events-container { max-width: 1000px; margin: 0 auto; display: grid; gap: 24px; }
+        .event-card { background: white; display: flex; border-radius: 25px; overflow: hidden; box-shadow: var(--soft-shadow); transition: 0.3s; border: 1px solid #f4dbe4; }
+        .event-card:hover { transform: translateY(-4px); }
+        .event-date { background: var(--primary-pink); color: white; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 130px; }
+        .event-date span { font-size: 2rem; font-weight: 800; line-height: 1; }
+        .event-date small { font-weight: 600; text-transform: uppercase; margin-top: 5px; }
+        .event-info { padding: 28px 30px; flex-grow: 1; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .event-copy { max-width: 620px; }
+        .event-info h3 { color: var(--primary-pink); margin-bottom: 8px; font-size: 1.35rem; }
+        .event-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; color: #666; font-size: 0.92rem; }
+        .event-meta span { display: inline-flex; align-items: center; gap: 6px; }
+        .event-copy p { color: #6b6b6b; font-size: 0.95rem; }
+        .event-side { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+        .event-status { padding: 7px 14px; border-radius: 999px; background: var(--soft-pink); color: var(--primary-pink); font-size: 0.8rem; font-weight: 700; }
+        .event-btn { background: white; border: 2px solid var(--primary-pink); color: var(--primary-pink); padding: 11px 22px; border-radius: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .event-btn:hover { background: var(--primary-pink); color: white; }
+
+        /* تنسيق SweetAlert مخصص */
+        .my-rounded-popup { border-radius: 35px !important; padding: 25px !important; }
+        .swal-field-group { margin-bottom: 18px; text-align: left; }
+        .swal-custom-label { display: block; font-size: 0.85rem; font-weight: 700; color: #444; margin-bottom: 8px; margin-left: 5px; }
+        .swal-input-icon-wrapper { position: relative; }
+        .swal-input-icon-wrapper i { position: absolute; left: 18px; top: 18px; color: var(--primary-pink); font-size: 1.1rem; }
+        .swal-custom-input { width: 100% !important; margin: 0 !important; padding: 15px 15px 15px 50px !important; border-radius: 18px !important; border: 1.5px solid #eee !important; font-size: 0.95rem !important; }
+        .qr-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 10px; }
+        .countdown-flex { display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+        .time-circle { background: var(--primary-pink); color: white; width: 75px; height: 75px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; }
+        .time-circle small { font-size: 0.65rem; text-transform: uppercase; font-weight: 400; }
+
+        footer { padding: 40px 8%; background: #1f1f1f; color: white; text-align: center; }
+        .footer-logo { margin-bottom: 8px; font-weight: 800; font-size: 1.3rem; color: var(--primary-pink); }
+
+        @media (max-width: 992px) {
+            nav ul { display: none; }
+            .page-hero { padding-top: 130px; }
+            .event-info { flex-direction: column; align-items: flex-start; }
+            .event-side { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero { min-height: 40vh; padding: 130px 6% 70px; }
+            .section-shell { padding: 55px 6% 70px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .event-card { flex-direction: column; }
+            .event-date { min-width: 100%; padding: 22px; }
+            .event-side { flex-direction: column; align-items: stretch; }
+            .event-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo-area">
+        <img src="logo.png" alt="Rotaract Logo">
+    </a>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="projects & Events.html" class="active">Projects & Events</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="signin.html" class="login-btn">LOGIN</a></li>
+        <li><a href="signup.html" class="register-btn">REGISTER</a></li>
+    </ul>
+</nav>
+
+<header class="page-hero">
+    <span class="hero-eyebrow">Projects & Events</span>
+    <h1>Initiatives That Turn Service Into Real Community Impact</h1>
+    <p>Discover the projects we are building across Alexandria and book your place in upcoming Rotaract Lumina events.</p>
+</header>
+
+<main>
+    <section class="section-shell">
+        <h2 class="section-label">Our <span>Core Initiatives</span></h2>
+        <p class="section-copy">Each initiative is designed to create practical, measurable impact through service, education, health awareness, sustainability, and youth empowerment.</p>
+        <div class="projects-grid" id="project-grid"></div>
+    </section>
+
+    <section class="section-shell events-shell">
+        <h2 class="section-label">Upcoming <span>Events</span></h2>
+        <p class="section-copy">Reserve your seat, receive a digital ticket, and track how long is left before the next Lumina experience begins.</p>
+        <div class="events-container" id="events-list"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-logo">Rotaract Renaissance Lumina</div>
+    <p>&copy; 2026 Rotaract International - District 2451</p>
+</footer>
+
+<script>
+    /* --- JavaScript --- */
+
+    // بيانات المبادرات
+    const projects = [
+        { title: 'Education for All', category: 'Education', img: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=80', desc: 'Supplying books, mentoring sessions, and practical workshops for schools and students who need stronger learning support.' },
+        { title: 'Health Awareness', category: 'Health', img: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=900&q=80', desc: 'Running awareness campaigns, first-aid workshops, and preventive care sessions that reach families across the city.' },
+        { title: 'Green Alexandria', category: 'Environment', img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=900&q=80', desc: 'Protecting beaches, reducing waste, and building greener public spaces through cleanup and planting drives.' },
+        { title: 'Youth Career Hub', category: 'Leadership', img: 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=900&q=80', desc: 'Helping students move from study to work with CV clinics, interview practice, and exposure to real career paths.' },
+        { title: 'Animal Care', category: 'Care', img: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=80', desc: 'Providing food, medical attention, and advocacy for stray animals through volunteer-led care initiatives.' },
+        { title: 'Digital Inclusion', category: 'Technology', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80', desc: 'Opening access to technology skills for underserved groups through simple, practical digital literacy sessions.' }
+    ];
+
+    // بيانات الفعاليات
+    const events = [
+        { title: 'Charity Run 2026', day: '25', month: 'DEC', dateStr: 'Dec 25, 2026 07:00:00', time: '7:00 AM', location: 'Alexandria Corniche', summary: 'A citywide run that raises support for student and health initiatives.' },
+        { title: 'Sidi Bishr Cleanup', day: '02', month: 'OCT', dateStr: 'October 02, 2026 16:00:00', time: '4:00 PM', location: 'Sidi Bishr Beach', summary: 'An environmental action day focused on cleaner shores and stronger community habits.' },
+        { title: 'Lumina Gala Dinner', day: '15', month: 'NOV', dateStr: 'November 15, 2026 19:00:00', time: '7:00 PM', location: 'Renaissance Hall', summary: 'A formal night of celebration, networking, and recognition for our volunteers and partners.' },
+        { title: 'Innovation Summit', day: '10', month: 'SEP', dateStr: 'September 10, 2026 09:00:00', time: '9:00 AM', location: 'Alexandria Innovation Hub', summary: 'A full-day summit connecting young leaders, entrepreneurs, and social impact thinkers.' }
+    ];
+
+    // عرض المشاريع للجميع مباشرة
+    function renderProjects() {
+        const grid = document.getElementById('project-grid');
+        grid.innerHTML = projects.map((project) => `
+            <article class="card">
+                <img src="${project.img}" alt="${project.title}">
+                <div class="card-body">
+                    <span class="card-tag">${project.category}</span>
+                    <h3>${project.title}</h3>
+                    <p>${project.desc}</p>
+                    <button class="view-btn" type="button" data-project-title="${project.title}">Support Project</button>
+                </div>
+            </article>`).join('');
+    }
+
+    function renderEvents() {
+        const list = document.getElementById('events-list');
+        list.innerHTML = events.map((eventItem) => `
+            <article class="event-card">
+                <div class="event-date"><span>${eventItem.day}</span><small>${eventItem.month}</small></div>
+                <div class="event-info">
+                    <div class="event-copy">
+                        <h3>${eventItem.title}</h3>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i>${eventItem.time}</span>
+                            <span><i class="fas fa-location-dot"></i>${eventItem.location}</span>
+                        </div>
+                        <p>${eventItem.summary}</p>
+                    </div>
+                    <div class="event-side">
+                        <span class="event-status">${getEventStatus(eventItem.dateStr)}</span>
+                        <button class="event-btn" type="button" data-event-title="${eventItem.title}" data-event-date="${eventItem.dateStr}">Join Event</button>
+                    </div>
+                </div>
+            </article>`).join('');
+    }
+
+    function getEventStatus(dateStr) {
+        const diff = new Date(dateStr).getTime() - Date.now();
+        if (diff <= 0) return 'Live or closed';
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        if (days === 1) return 'Tomorrow';
+        if (days <= 7) return 'In ' + days + ' days';
+        return 'Open for registration';
+    }
+
+    // منطق محلي للتسجيل (لتجنب إيرور السيرفر)
+    async function registerProject(title) {
+        const userData = JSON.parse(localStorage.getItem('luminaUser') || '{}');
+        const userName = userData.name || '';
+
+        const result = await Swal.fire({
+            title: '<span style="color:#D91E5B">Support Initiative</span>',
+            html: `
+                <div class="swal-field-group">
+                    <label class="swal-custom-label">Your Name</label>
+                    <div class="swal-input-icon-wrapper"><i class="fas fa-user"></i><input id="p-name" class="swal-custom-input" value="${userName}"></div>
+                </div>
+                <div class="swal-field-group">
+                    <label class="swal-custom-label">Contact Info</label>
+                    <div class="swal-input-icon-wrapper"><i class="fas fa-address-book"></i><input id="p-contact" class="swal-custom-input"></div>
+                </div>`,
+            showCancelButton: true,
+            confirmButtonText: 'Submit Support',
+            confirmButtonColor: '#D91E5B',
+            preConfirm: () => {
+                const name = document.getElementById('p-name').value;
+                if (!name) { Swal.showValidationMessage('Please enter your name'); return false; }
+                return { name };
+            }
+        });
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Thank You!', text: `Support for ${title} received.`, icon: 'success', confirmButtonColor: '#D91E5B' });
+        }
+    }
+
+    async function registerEvent(title, dateStr) {
+        const result = await Swal.fire({
+            title: '<span style="color:#D91E5B">Event Registration</span>',
+            html: `
+                <div class="swal-field-group">
+                    <label class="swal-custom-label">Name</label>
+                    <div class="swal-input-icon-wrapper"><i class="fas fa-id-card"></i><input id="e-name" class="swal-custom-input"></div>
+                </div>
+                <div class="swal-field-group">
+                    <label class="swal-custom-label">Email</label>
+                    <div class="swal-input-icon-wrapper"><i class="fas fa-envelope"></i><input id="e-email" class="swal-custom-input"></div>
+                </div>`,
+            showCancelButton: true, confirmButtonText: 'Confirm & Get QR', confirmButtonColor: '#D91E5B',
+            preConfirm: () => {
+                const n = document.getElementById('e-name').value;
+                if (!n) { Swal.showValidationMessage('Name is required'); return false; }
+                return { name: n };
+            }
+        });
+
+        if (result.isConfirmed) {
+            const ticketID = 'LUM-' + Math.floor(Math.random() * 9000 + 1000);
+            await Swal.fire({
+                title: 'Your Digital Ticket',
+                html: `<div class="qr-wrapper"><div id="qrcode"></div><p><b>Ticket ID:</b> ${ticketID}</p></div>`,
+                confirmButtonText: 'View Countdown', confirmButtonColor: '#D91E5B',
+                didOpen: () => {
+                    new QRCode(document.getElementById('qrcode'), { 
+                        text: `Ticket: ${ticketID} | Event: ${title} | Name: ${result.value.name}`, 
+                        width: 160, height: 160, colorDark: '#D91E5B' 
+                    });
+                }
+            });
+            showCountdown(title, dateStr);
+        }
+    }
+
+    function showCountdown(title, target) {
+        let timerId;
+        Swal.fire({
+            title: title,
+            html: `<div class="countdown-flex"><div class="time-circle"><span id="d">0</span><small>Days</small></div><div class="time-circle"><span id="h">0</span><small>Hours</small></div><div class="time-circle"><span id="m">0</span><small>Mins</small></div><div class="time-circle"><span id="s">0</span><small>Secs</small></div></div>`,
+            confirmButtonText: 'See You There!', confirmButtonColor: '#D91E5B',
+            didOpen: () => {
+                const t = new Date(target).getTime();
+                const upd = () => {
+                    const diff = t - Date.now();
+                    if (diff <= 0) { clearInterval(timerId); return; }
+                    document.getElementById('d').textContent = Math.floor(diff / 86400000);
+                    document.getElementById('h').textContent = Math.floor((diff % 86400000) / 3600000);
+                    document.getElementById('m').textContent = Math.floor((diff % 3600000) / 60000);
+                    document.getElementById('s').textContent = Math.floor((diff % 60000) / 1000);
+                };
+                upd(); timerId = setInterval(upd, 1000);
+            },
+            willClose: () => clearInterval(timerId)
+        });
+    }
+
+    function handleActionClick(event) {
+        const pb = event.target.closest('[data-project-title]');
+        if (pb) { 
+            const user = localStorage.getItem('luminaUser');
+            if (!user) {
+                window.location.href = 'signup.html';
+                return;
+            }
+            registerProject(pb.dataset.projectTitle); 
+            return; 
+        }
+        const eb = event.target.closest('[data-event-title]');
+        if (eb) registerEvent(eb.dataset.eventTitle, eb.dataset.eventDate);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProjects();
+        renderEvents();
+        document.addEventListener('click', handleActionClick);
+    });
+</script>
+    <script src="auth-ui.js"></script>
+</body>
+</html>
